@@ -7,12 +7,12 @@ def load_movies(path: str) -> List[Dict]:
         with open(path, 'r', encoding='utf-8') as file:
             movies = json.load(file)
             return movies if isinstance(movies, list) else []
-    except (FileNotFoundError, json.JSONDecodeError):
+    except (FileNotFoundError, json.JSONDecodeError, UnicodeDecodeError):
         return []
 
 
 def save_movies(path: str, movies: List[Dict]) -> None:
-    with open(path, 'w') as file:
+    with open(path, 'w', encoding='utf-8') as file:
         json.dump(movies, file, ensure_ascii=False, indent=2)
 
 
@@ -33,7 +33,6 @@ def add_movie(movies: List[Dict], title: str, year: int) -> List[Dict]:
 
 
 def mark_watched(movies: List[Dict], movie_id: int) -> List[Dict]:
-
     updated_movies = []
     for movie in movies:
         if movie['id'] == movie_id:
@@ -46,5 +45,4 @@ def mark_watched(movies: List[Dict], movie_id: int) -> List[Dict]:
     return updated_movies
 
 def find_by_year(movies: List[Dict], year: int) -> List[Dict]:
-
     return [movie for movie in movies if movie['year'] == year]
