@@ -7,3 +7,5 @@ env/
 *.log
 htmlcov/
 *.coverage
+movies.json
+
